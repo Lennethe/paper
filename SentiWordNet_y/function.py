@@ -35,6 +35,9 @@ class SentiWordNetCorpusReader:
         # 入力:synset
         # 出力:pos_score,neg_score
         self.synset_to_score = {}
+        # 入力: word
+        # 出力: pos
+        self.word_to_pos = {}
         self.parse_src_file()
 
     # ファイルの捜査を行い、dbにデータを格納する。
@@ -60,6 +63,7 @@ class SentiWordNetCorpusReader:
                 if (pos_score, neg_score) not in self.score_to_senti_synset:
                     self.score_to_senti_synset[(pos_score, neg_score)] = []
                 self.score_to_senti_synset[(pos_score, neg_score)].append(SentiSynset(pos_score,neg_score,synset))
+                self.word_to_pos[SentiSynset(pos_score,neg_score,synset).name()] = pos
             if synset:
                 self.synset_to_score[synset] = (pos_score, neg_score)
 
@@ -82,22 +86,39 @@ class SentiWordNetCorpusReader:
             pos_score, neg_score = fields
             synset = wn._synset_from_pos_and_offset(pos, offset)
             yield SentiSynset(pos_score, neg_score, synset)
-
-    # 単語からsynsetを返したい
-    def test(self, word):
-        synsets = self.senti_synsets(word)
-        return synsets
     
     def similar_senti_words(self, word):
         words = []
         synsets = wn.synsets(word)
+        pos = self.word_to_pos[word]
+        if word not in self.word_to_pos:
+            print("該当する単語はありません")
+            return []
+        else:
+            print(word,"の品詞は",pos,"です")
         for synset in wn.synsets(word): 
             pos_score,neg_score = self.synset_to_score[synset]
             for senti_synset in self.score_to_senti_synset[(pos_score, neg_score)]:
-                #print(senti_synset)
-                #print(senti_synset.name())
-                if senti_synset.name() not in words:
-                    words.append(senti_synset.name())
+                word = senti_synset.name()
+                if word not in words and (pos == self.word_to_pos[word]):
+                    words.append(word)
+        return sorted(words)
+
+    def antonym_senti_words(self,word):
+        words = []
+        synsets = wn.synsets(word)
+        pos = self.word_to_pos[word]
+        if word not in self.word_to_pos:
+            print("該当する単語はありません")
+            return []
+        else:
+            print(word,"の品詞は",pos,"です")
+        for synset in wn.synsets(word): 
+            neg_score,pos_score = self.synset_to_score[synset]
+            for senti_synset in self.score_to_senti_synset[(pos_score, neg_score)]:
+                word = senti_synset.name()
+                if word not in words and (pos == self.word_to_pos[word]):
+                    words.append(word)
         return sorted(words)
 
 

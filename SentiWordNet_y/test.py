@@ -14,9 +14,15 @@ print(wn.synsets("able"))
 print(swn.senti_synsets("able"))
 print("33")
 count = 0
+words = swn.antonym_senti_words("able")
+print(len(words))
+for i in range(100):
+    print(words[i])
+
+
 for senti_synset in swn.all_senti_synsets():
     count += 1
-    if count>1:
+    if count>0:
         break
     words = swn.similar_senti_words(senti_synset.name())
     for i in range(10):
