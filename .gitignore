@@ -6,3 +6,4 @@
 word2vec/japanese-word2vec-model-builder/
 word2vec/model
 *.pyc
+*.pyc
