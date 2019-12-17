@@ -7,3 +7,7 @@ word2vec/japanese-word2vec-model-builder/
 word2vec/model
 *.pyc
 *.pyc
+wordnet/.DS_Store
+SentiWordNet_y/__pycache__/function.cpython-37.pyc
+*.pyc
+*.db
