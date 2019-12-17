@@ -90,19 +90,27 @@ class SentiWordNetCorpusReader:
     def similar_senti_words(self, word):
         words = []
         synsets = wn.synsets(word)
-        pos = self.word_to_pos[word]
         if word not in self.word_to_pos:
             print("該当する単語はありません")
             return []
+        pos = self.word_to_pos[word]            
+        print(word,"の品詞は",pos,"です")
+
+        synset = wn.synsets(word)[0]             
+        pos_score,neg_score = self.synset_to_score[synset]
+        if neg_score == "0" and pos_score == "0":
+            print("感情が無です。類義語を見つける必要がありません")
+            return []
         else:
-            print(word,"の品詞は",pos,"です")
-        for synset in wn.synsets(word): 
-            pos_score,neg_score = self.synset_to_score[synset]
-            for senti_synset in self.score_to_senti_synset[(pos_score, neg_score)]:
-                word = senti_synset.name()
-                if word not in words and (pos == self.word_to_pos[word]):
-                    words.append(word)
+            print(word,"は pos_score =",pos_score,", neg_score =",neg_score,"です")
+            print("pos_score =",pos_score,", neg_score =",neg_score,"のものを検索します")
+        for senti_synset in self.score_to_senti_synset[(pos_score, neg_score)]:                
+            out_word = senti_synset.name()
+            if out_word not in words and (pos == self.word_to_pos[out_word]):
+                words.append(out_word)
         return sorted(words)
+
+
 
     def antonym_senti_words(self,word):
         words = []
@@ -120,9 +128,7 @@ class SentiWordNetCorpusReader:
         else:
             print(word,"は pos_score =",pos_score,", neg_score =",neg_score,"です")
             print("pos_score =",neg_score,", neg_score =",pos_score,"のものを検索します")
-        count = 0
         for senti_synset in self.score_to_senti_synset[(neg_score, pos_score)]:                
-            count += 1
             out_word = senti_synset.name()
             if out_word not in words and (pos == self.word_to_pos[out_word]):
                 words.append(out_word)
