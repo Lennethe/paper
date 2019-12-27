@@ -11,6 +11,12 @@ print('----------')
  
 words = doc.sentences[0].words
 word = ''
+
+
+print(dir(doc.sentences[0]))
+doc.sentences[0].print_tokens()
+doc.sentences[0].print_words()
+
  
 for w in words:
     word += w.text + ' '
