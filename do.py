@@ -14,21 +14,27 @@ OUTPUT_WID = 6
 print("SWN使用準備完了")
 print("使用したいモードを選んで下さい")
 print("1 -> ")
-
+print("quit() - > 終了")
 
 def main():
     inp = input()
     if inp == "1":
         print("感情的な反意語を出します")
         print("やめたい場合はquit()と入力して下さい")
-        anti()
+        senti_anti()
+    elif inp == "2":
+        print("")
+    elif inp == "quit()":
+        print("システムを終了します")
+        print("お疲れ様でした")
+        print()
     else:
         print("該当するモードはありません")
         print("使用したいモードを選んで下さい")
         print()
         main()
 
-def anti():
+def senti_anti():
     string = input()
     if string == "quit()":
         print("モード選択へ戻ります")
@@ -45,6 +51,6 @@ def anti():
                 idx+=OUTPUT_WID
         print()
         print("次の単語を入力して下さい")
-        anti()
+        senti_anti()
 
 main()
