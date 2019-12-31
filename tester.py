@@ -34,6 +34,7 @@ def main():
         print()
         main()
 
+### 入力したものに対して反対の感情を返す
 def senti_anti():
     string = input()
     if string == "quit()":
