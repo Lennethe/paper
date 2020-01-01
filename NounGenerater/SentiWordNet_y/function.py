@@ -110,7 +110,17 @@ class SentiWordNetCorpusReader:
                 words.append(out_word)
         return sorted(words)
 
-
+    def print_word_senti(self,word):
+        synsets = wn.synsets(word)
+        if word not in self.word_to_pos:
+            return "None"
+        synset = wn.synsets(word)[0]
+        pos_score, neg_score = self.synset_to_score[synset]
+        if neg_score == "0" and pos_score == "0":
+            return "N"
+        if pos_score >= neg_score:
+            return "pos"
+        return "neg"
 
     def antonym_senti_words(self,word):
         words = []
