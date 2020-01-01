@@ -64,6 +64,7 @@ def array_review_to_dep(sentence, judge, key, not_pair = True):
                 res.append(tmp)
     return res
 
+# nmodとかそういうのが含まれているかを判定
 def pair_in_key(pos1, pos2, key, not_pair = True):
     if not_pair:
         return pos1 in key
