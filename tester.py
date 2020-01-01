@@ -1,8 +1,8 @@
 # 全部を実行するファイル
 import nltk
 from nltk.corpus import wordnet as wn
-from SentiWordNet_y.function import SentiWordNetCorpusReader, SentiSynset
-swn_filename = 'SentiWordNet_y/data/SentiWordNet_3.0.0.txt'
+from NounGenerater.SentiWordNet_y.function import SentiWordNetCorpusReader, SentiSynset
+swn_filename = 'NounGenerater/SentiWordNet_y/data/SentiWordNet_3.0.0.txt'
 swn = SentiWordNetCorpusReader(swn_filename)
 
 ## 定数
@@ -13,7 +13,8 @@ OUTPUT_WID = 6
 
 print("SWN使用準備完了")
 print("使用したいモードを選んで下さい")
-print("1 -> ")
+print("1 -> 感情的反意語")
+print("2 -> 単語の感情")
 print("quit() - > 終了")
 
 def main():
@@ -24,6 +25,7 @@ def main():
         senti_anti()
     elif inp == "2":
         print("")
+        check_senti()
     elif inp == "quit()":
         print("システムを終了します")
         print("お疲れ様でした")
@@ -33,6 +35,16 @@ def main():
         print("使用したいモードを選んで下さい")
         print()
         main()
+
+def check_senti():
+    string = input()
+    if string == "quit()":
+        print("モード選択へ戻ります")
+        main()
+    else:
+        print(swn.print_word_senti(string))
+        print("次の単語を入力して下さい")
+        check_senti()
 
 ### 入力したものに対して反対の感情を返す
 def senti_anti():
