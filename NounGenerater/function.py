@@ -88,11 +88,23 @@ def out_noun(line):
         return line["word2"]
     return ""
 
+def out_ad(line):
+    ad = ["amod"]
+    sub_pair = [("obl","root"), ("conj","root"), ("nsubj","root"), ("nsubj", "conj")]
+    if line["pos1"] in ad:
+        return line["word1"]
+    if line["pos2"] in ad:
+        return line["word2"]
+    if (line["pos1"],line["pos2"]) in sub_pair:
+        return line["word2"]
+    return ""
+
 class Calc:
     # PMIを求めるにしろ、単語の出現確率、共起率を求める。
     # 
     def __init__(self):
         self.noun_counter = {}
+        self.ad_counter = {}
 
     def count_noun(self, arr):
         for line in arr:
@@ -102,18 +114,35 @@ class Calc:
             if word not in self.noun_counter:
                 self.noun_counter[word] = 0
             self.noun_counter[word] += 1
+    
+    def count_ad(self, arr):
+        for line in arr:
+            word = out_ad(line)
+            if word == "":
+                continue
+            if word not in self.ad_counter:
+                self.ad_counter[word] = 0
+            self.ad_counter[word] += 1    
 
     def print_count_noun(self):
         sum = 0
         counter = sorted(self.noun_counter.items(), key=lambda x:x[1])
         counter.reverse()
-        self.writer_arr(counter, 'noun.txt')
         for word_t in counter:
             print(word_t[0]," = ",word_t[1])
             sum += word_t[1]
         print("sum = ",sum)
 
-    def writer_arr(self, counter, file_name):
+    def writer_pos(self, file_name, pos):
+        if pos == "noun":
+            counter = sorted(self.noun_counter.items(), key=lambda x:x[1])
+            counter.reverse()
+        elif pos == "ad":
+            counter = sorted(self.ad_counter.items(), key=lambda x:x[1])
+            counter.reverse()
+        else:
+            print("何も出力しませんでした")
+            return 
         file = open(file_name, 'w')
         sum = 0
         for word_t in counter:
