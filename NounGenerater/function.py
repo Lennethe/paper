@@ -76,3 +76,53 @@ def pair_in_key(pos1, pos2, key, not_pair = True):
             if pos1 == x[0] and pos2 == x[1]:
                 return True
     return False
+
+def out_noun(line):
+    noun = ["obl", "obj", "nsubj","nmod"]
+    sub_pair = [("amod", "root"), ("conj","root"), ("amod", "conj")]
+    if line["pos1"] in noun:
+        return line["word1"]
+    if line["pos2"] in noun:
+        return line["word2"]
+    if (line["pos1"],line["pos2"]) in sub_pair:
+        return line["word2"]
+    return ""
+
+class Calc:
+    # PMIを求めるにしろ、単語の出現確率、共起率を求める。
+    # 
+    def __init__(self):
+        self.noun_counter = {}
+
+    def count_noun(self, arr):
+        for line in arr:
+            word = out_noun(line)
+            if word == "":
+                continue
+            if word not in self.noun_counter:
+                self.noun_counter[word] = 0
+            self.noun_counter[word] += 1
+
+    def print_count_noun(self):
+        sum = 0
+        counter = sorted(self.noun_counter.items(), key=lambda x:x[1])
+        counter.reverse()
+        self.writer_arr(counter, 'noun.txt')
+        for word_t in counter:
+            print(word_t[0]," = ",word_t[1])
+            sum += word_t[1]
+        print("sum = ",sum)
+
+    def writer_arr(self, counter, file_name):
+        file = open(file_name, 'w')
+        sum = 0
+        for word_t in counter:
+            file.write(word_t[0])
+            file.write(" = ")
+            file.write(str(word_t[1]))
+            file.write("\n")
+            sum += word_t[1]
+        file.write("\n")
+        file.write("sum = ")
+        file.write(str(sum))
+        file.close()
