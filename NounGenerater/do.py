@@ -13,6 +13,12 @@ key = [["nsubj"], ["obl"], ["obj"],["nmod"], ["conj", "root"], ["amod", "root"],
 not_pair = False
 judge = ["pos"] #sentiが含んでいいやつ None,N,pos,negからなる
 UP_LIMIT = 35000
+
+WRITE_NOUN = False
+WRITE_AD = True
+noun_file_name = "noun1.txt"
+ad_file_name = "ad.txt"
+
 cal = f.Calc()
 #nlp = stanfordnlp.Pipeline()
 ########
@@ -30,9 +36,15 @@ for x in range(UP_LIMIT):
         continue
     arr = f.array_review_to_dep(reviews[x], judge, key, not_pair)
     amount += len(arr)
-    cal.count_noun(arr)
+    if WRITE_NOUN:
+        cal.count_noun(arr)
+    if WRITE_AD: 
+        cal.count_ad(arr)
     #for val in arr:
     #    print(val["pos1"]," -> ",val["pos2"], " ", val["word1"]," -> ",val["word2"])
 
-cal.print_count_noun()
+if WRITE_NOUN:
+    cal.writer_pos(noun_file_name, "noun")
+if WRITE_AD:
+    cal.writer_pos(ad_file_name, "ad")
 print(amount)
