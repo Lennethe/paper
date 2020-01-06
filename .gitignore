@@ -12,3 +12,4 @@ SentiWordNet_y/__pycache__/function.cpython-37.pyc
 *.pyc
 *.db
 NounGenerater/7282_1.csv
+NounGenerater/error_pmi
