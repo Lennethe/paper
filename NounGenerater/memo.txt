@@ -1,0 +1,31 @@
+4 Pleasant min(amod nsubj), Hotel confortable(nsubj root), breakfast good, aircon didn't work.
+5 lovely hotel, top floor, Staff friendly helpful, breakfast great, great location, great value, 
+5 ??
+5 staff welcoming, friendly helpful,rooms clean, room confortable, good shower,airy rooms, bed comfortable,
+
+
+Pleasant 10 min walk along the sea front to the Water Bus. restaurants etc. Hotel was comfortable breakfast was good - quite a variety. Room aircon didn't work very well. Take mosquito repelant!
+
+/ amod  ->  nsubj   Pleasant -> min  
+nsubj  ->  root   min -> walk
+obl  ->  root   front -> walk
+nmod  ->  obl   restaurants -> front
+/ nsubj  ->  root   Hotel -> comfortable
+/ nsubj  ->  parataxis   breakfast -> good
+nsubj  ->  root   aircon -> work
+obj  ->  root   repelant -> Take
+
+残って欲しい
+amod  ->  nsubj   Pleasant -> min
+nsubj  ->  parataxis   breakfast -> good
+
+amod  ->  root   lovely -> hotel
+conj  ->  root   surprised -> Stayed
+obl  ->  conj   bath -> surprised
+nsubj  ->  root   Staff -> friendly
+conj  ->  root   helpful -> friendly
+conj  ->  root   great -> friendly
+
+conj  ->  root   friendly -> welcoming
+conj  ->  root   helpful -> welcoming
+amod  ->  conj   good -> shower
