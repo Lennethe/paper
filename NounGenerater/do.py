@@ -28,9 +28,10 @@ cal.read_words()
 
 #nlp = stanfordnlp.Pipeline()
 ########
-#nlp = stanfordnlp.Pipeline()
-#doc = nlp("価格の割にはいろいろがっかりするホテルである。犬が自由に連れてこれるため常にロビーやエレベーターの中に犬がいる。＝匂いがある。　廊下も部屋もカーペットであるので匂いや汚れが気になる。スタッフはフレンドリーであるがそれ以上のものはない。場所はいいと思う。駅からは遠いが無料のトローリーバスがあるので便利。")
-#doc.sentences[0].print_dependencies()
+nlp = stanfordnlp.Pipeline()
+doc = nlp("This film doesn't care about cleverness, wit or any other kind of intelligent humor.")
+doc.sentences[0].print_dependencies()
+x = 3/0
 #####
 reviews = f.get_reviews(UP_LIMIT)
 posi = 0
