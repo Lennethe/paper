@@ -8,7 +8,7 @@ sentence1 = input()
 print("文章2を入力してください")
 sentence2 = input()
 
-text = "[CLS] " + sentence1 + " [SEP] " + sentence2 + " [SEP]"
+text = "[CLS] " + sentence1 + " [SEP] a" + sentence2 + " [SEP]"
 
 ids1 = [0] *(len(tokenizer.tokenize(sentence1)) + 2)
 ids2 = [1] *(len(tokenizer.tokenize(sentence2)) + 1)
