@@ -30,4 +30,12 @@ model.to('cuda')
 # Predict the next sentence classification logits
 with torch.no_grad():
     next_sent_classif_logits = model(tokens_tensor, segments_tensors)
+
+a = torch.softmax(next_sent_classif_logits[0], dim=1)
 print(torch.softmax(next_sent_classif_logits[0], dim=1))
+print(torch.softmax(next_sent_classif_logits[0].cpu(), dim=1))
+print(a.cpu())
+#a.item()
+print(a[0][0].item())
+
+
