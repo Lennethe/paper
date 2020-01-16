@@ -1,7 +1,10 @@
 
+from ReturnWord import function as rw
 from SearchSentence import function as sf
 from NextSentencePredict import function as nexter
 
+returnf = rw.Calc()
+returnf.you_can_use_words()
 searcher = sf.SearchEngine()
 
 ATT_NUM = 3 # 想定される属性語の次の候補
@@ -22,16 +25,16 @@ input_sentence = input()
 #TODO1 Stanford Sentiment Treeebank
 attribute_word, emotion = f.hoge(input_sentence)
 
-#TODO2 ReturnWord
-next_attribute_words = f.hoge(attribute_word, num=ATT_NUM)
+# ReturnWord
+next_attribute_words = returnf.attribute_words(attribute_word, num=ATT_NUM)
 # 全ての単語がユニークであると仮定
 
 # att_and_emo_pairs -> 属性語と評判語のペア
 
-#TODO3 ReturnWord
+# ReturnWord
 att_and_emo_pairs = []
 for att_word in next_attribute_words:
-    att_and_emo_pairs.append(att_word, f.hoge(att_word, EMO_NUM))
+    att_and_emo_pairs.extend(att_word, returnf.emotional_words(att_word, EMO_NUM))
 
 # sentences -> 文章の候補
 # SearchSentence 
