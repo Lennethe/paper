@@ -14,12 +14,12 @@ class Calc:
     def you_can_use_words(self):
         print(self.use_noun)
 
-    def return_similar_noun(self, word, num=10):
+    def attribute_words(self, word, num=10):
         if word not in self.pair_noun:
             return "ないよ"
         return self.pair_noun[word][0:num]
     
-    def return_pair_word(self, word, num=10):
+    def emotional_words(self, word, num=10):
         if word not in self.pair_sentence:
             return "ないよ"
         return self.pair_sentence[word][0:num]    

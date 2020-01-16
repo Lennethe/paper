@@ -30,8 +30,9 @@ class SearchEngine:
     def __init__(self):
         self.reviews = get_reviews(35000)
 
-    def search(self,w1,w2):
+    def search(self,w1,w2,num=10):
         review_num = 0
+        res = []
         for review in self.reviews:
             review_num += 1
             sentences = re.split(r"\.|!", review)
@@ -44,8 +45,8 @@ class SearchEngine:
                     if w2 == word:
                         f_w2 = True
                 if f_w1 and f_w2:
-                    print(sentence, review_num)
-        print("次の単語を入力してください")
-#            words = review.split()
- #           for word in words:
-  #              w = word.lower()
+                    res.append(sentence)
+                    if len(res) > num:
+                        return res
+        return res
+                    #print(sentence, review_num)

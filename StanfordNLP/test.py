@@ -6,9 +6,13 @@ key = ["amod", "obl1", "nsubj1"]
 ####
 nlp = stanfordnlp.Pipeline()
 
+
+
 def print_dep(sentence):
     nlp = stanfordnlp.Pipeline()
     doc = nlp(sentence)
+    print(dir(doc))
+    x = 3/0
 
     for x in range(len(doc.sentences)):
         # doc.sentences[x].print_dependencies()
