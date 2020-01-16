@@ -10,7 +10,6 @@ import re
 import os
 import sys
 import codecs
-
 try:
     from nltk.corpus import wordnet as wn
 except ImportError:

@@ -1,11 +1,59 @@
 import csv
 import stanfordnlp
 import math
-from SentiWordNet_y.function import SentiWordNetCorpusReader, SentiSynset
-swn_filename = 'SentiWordNet_y/data/SentiWordNet_3.0.0.txt'
+from NounGenerater.SentiWordNet_y.function import SentiWordNetCorpusReader, SentiSynset
+#from SentiWordNet_y.function import SentiWordNetCorpusReader, SentiSynset
+
+#import nltk
+#nltk.download('wordnet')
+#stanfordnlp.download('en')   # This downloads the English models for the neural pipeline
+
+#swn_filename = 'SentiWordNet_y/data/SentiWordNet_3.0.0.txt'
+swn_filename = 'NounGenerater/SentiWordNet_y/data/SentiWordNet_3.0.0.txt'
 swn = SentiWordNetCorpusReader(swn_filename)
 nlp = stanfordnlp.Pipeline()
 sub = {"i","we","a","the","you","it","us","due","with","of"}
+
+## 文章から属性語を取り出す
+#def array_review_to_dep(sentence, judge, key, not_pair = True):
+judge = ["pos"]
+#key = ["amod", "conj", "nmod", "nsubj", "obj", "obl"] 
+key = [["nsubj"], ["obl"], ["obj"],["nmod"], ["conj", "root"], ["amod", "root"], ["amod", "conj"] ]
+not_pair = False
+
+
+def sentence_to_atts(sente):
+    doc = nlp(sente)
+    words = doc.sentences[0].dependencies_string().splitlines()
+    sentence = {}
+    for i in range(len(words)):
+        w = words[i].split("'")
+        sentence[str(i+1)] = [w[1],w[3],w[5]]
+    res = []
+    for i in range(len(words)):
+        to = sentence[str(i+1)][1]
+        if to not in sentence:
+            continue
+        if swn.print_word_senti(sentence[to][0].lower()) not in judge and swn.print_word_senti(sentence[str(i+1)][0].lower()) not in judge:
+            continue
+        pos1 = sentence[str(i+1)][2]
+        pos2 = sentence[to][2]
+        word1 = sentence[str(i+1)][0]
+        word2 = sentence[to][0]
+        if word1.lower() in sub or word2.lower() in sub:
+            continue
+        if pair_in_key(pos1, pos2, key, not_pair):
+            tmp = {}
+            tmp["pos1"] = pos1
+            tmp["pos2"] = pos2
+            tmp["word1"] = word1
+            tmp["word2"] = word2
+            res.append(tmp)
+    ret = []
+    for line in res:
+        ret.append(out_noun(line))
+    return ret
+
 
 ## ファイル開く時用,private
 def read_dic(row):

@@ -1,5 +1,5 @@
 import torch
-from pytorch_transformers import BertTokenizer, BertModel, BertForNextSenten    cePrediction
+from pytorch_transformers import BertTokenizer, BertModel, BertForNextSentencePrediction
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 

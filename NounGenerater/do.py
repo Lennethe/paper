@@ -8,7 +8,7 @@ warnings.filterwarnings('ignore')
 
 #########
 dic = {}
-key = ["amod", "conj", "nmod", "nsubj", "obj", "obl"] 
+#key = ["amod", "conj", "nmod", "nsubj", "obj", "obl"] 
 key = [["nsubj"], ["obl"], ["obj"],["nmod"], ["conj", "root"], ["amod", "root"], ["amod", "conj"] ]
 not_pair = False
 judge = ["pos"] #sentiが含んでいいやつ None,N,pos,negからなる
@@ -31,7 +31,6 @@ cal.read_words()
 nlp = stanfordnlp.Pipeline()
 doc = nlp("This film doesn't care about cleverness, wit or any other kind of intelligent humor.")
 doc.sentences[0].print_dependencies()
-x = 3/0
 #####
 reviews = f.get_reviews(UP_LIMIT)
 posi = 0
@@ -46,6 +45,7 @@ for x in range(UP_LIMIT):
     print(posi)
     if reviews[x] == "":
         continue
+    # arrはnounとadのペアの配列
     arr = f.array_review_to_dep(reviews[x], judge, key, not_pair)
     amount += len(arr)
     if WRITE_NOUN:

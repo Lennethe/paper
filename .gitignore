@@ -76,3 +76,8 @@ StanfordNLP/stanford-corenlp-full-2018-10-05/tokensregex/color.input.txt
 StanfordNLP/stanford-corenlp-full-2018-10-05/tokensregex/color.properties
 StanfordNLP/stanford-corenlp-full-2018-10-05/tokensregex/color.rules.txt
 StanfordNLP/stanford-corenlp-full-2018-10-05/tokensregex/retokenize.txt
+pmi_noun.txt
+7282_1.csv
+noun.txt
+ad.txt
+pmi.txt
